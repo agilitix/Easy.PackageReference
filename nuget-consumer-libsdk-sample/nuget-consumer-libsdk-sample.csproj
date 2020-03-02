@@ -1,0 +1,28 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <ProjectGuid>{41D14523-CD95-4D5F-A250-5CA2E503B105}</ProjectGuid>
+    <RootNamespace>nuget_consumer_libsdk_sample</RootNamespace>
+    <TargetFramework>net452</TargetFramework>
+    <AssemblyTitle>nuget-consumer-libsdk-sample</AssemblyTitle>
+    <Product>nuget-consumer-libsdk-sample</Product>
+    <Copyright>Copyright ©  2020</Copyright>
+    <OutputPath>bin\$(Configuration)\</OutputPath>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugType>full</DebugType>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Net.Http" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="readme.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="sqlite" Version="3.12.3" />
+  </ItemGroup>
+</Project>
