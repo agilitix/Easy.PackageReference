@@ -93,8 +93,8 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="sqlite">
-      <Version>3.13.0</Version>
+    <PackageReference Include="LibGit2Sharp.NativeBinaries">
+      <Version>2.0.298</Version>
     </PackageReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

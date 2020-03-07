@@ -1,28 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <Project ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-    <Target Name="BeforeBuild">
-        <Message Importance="High" Text="=========================================================" />
+    <Target Name="BuildInfos" AfterTargets="Build">
         <Message Importance="High" Text="MSBuildProjectName=$(MSBuildProjectName)" />
         <Message Importance="High" Text="Platform=$(Platform)" />
         <Message Importance="High" Text="PlatformTarget=$(PlatformTarget) / Prefer32Bit=$(Prefer32Bit)" />
         <Message Importance="High" Text="NuGetProjectStyle=$(NuGetProjectStyle)" />
         <Message Importance="High" Text="NuGetPackageRoot=$(NuGetPackageRoot)" />
-        <Message Importance="High" Text="EnvNuGetPackageRoot=$(EnvNuGetPackageRoot)" />
-        <Message Importance="High" Text="=========================================================" />
+        <Message Importance="High" Text="EnvNuGetPackagesRoot=$(EnvNuGetPackagesRoot)" />
+        <Message Importance="High" Text="PackagesConfigRoot=$(PackagesConfigRoot)" />
+        <Message Importance="High" Text="PackageReferenceRoot=$(PackageReferenceRoot)" />
     </Target>
 
-    <Target Name="CopyPackageSqlite" AfterTargets="Build">
+    <Target Name="CopyPackageGitBin" AfterTargets="Build">
         <PropertyGroup>
-            <SqliteVersion Condition="'%(PackageReference.Identity)' == 'sqlite'">%(PackageReference.Identity).%(PackageReference.Version)</SqliteVersion>
+            <GitBinPackage Condition="'%(PackageReference.Identity)' == 'LibGit2Sharp.NativeBinaries'">%(PackageReference.Identity)\%(PackageReference.Version)</GitBinPackage>
         </PropertyGroup>
         <ItemGroup>
-            <Sqlite_x86 Condition="'%(PackageReference.Identity)' == 'sqlite'" Include="$(NuGetPackageRoot)%(PackageReference.Identity)\%(PackageReference.Version)\runtimes\win7-x86\native\*" />
-            <Sqlite_x64 Condition="'%(PackageReference.Identity)' == 'sqlite'" Include="$(NuGetPackageRoot)%(PackageReference.Identity)\%(PackageReference.Version)\runtimes\win7-x64\native\*" />
+            <GitBin_x86 Condition="'$(GitBinPackage)' != ''" Include="$(NuGetPackageRoot)$(GitBinPackage)\runtimes\win-x86\native\*" />
+            <GitBin_x64 Condition="'$(GitBinPackage)' != ''" Include="$(NuGetPackageRoot)$(GitBinPackage)\runtimes\win-x64\native\*" />
         </ItemGroup>
-        <Message Condition="'$(SqliteVersion)' != ''" Text="Copying sqlite version: $(SqliteVersion)" Importance="High" />
-        <Copy Condition="'$(Platform)' == 'AnyCPU' and '@(Sqlite_x64)' != ''" SourceFiles="@(Sqlite_x64)" DestinationFolder="$(OutDir)x64" SkipUnchangedFiles="true" />
-        <Copy Condition="'$(Platform)' == 'x64' and '@(Sqlite_x64)' != ''" SourceFiles="@(Sqlite_x64)" DestinationFolder="$(OutDir)x64" SkipUnchangedFiles="true" />
-        <Copy Condition="'$(Platform)' == 'x86' and '@(Sqlite_x86)' != ''" SourceFiles="@(Sqlite_x86)" DestinationFolder="$(OutDir)x86" SkipUnchangedFiles="true" />
+        <Message Condition="'$(GitBinPackage)' != ''" Text="Copying git binaries - GitBinPackage=$(GitBinPackage)" Importance="High" />
+        <Copy Condition="'$(Platform)' == 'AnyCPU' and '@(GitBin_x64)' != ''" SourceFiles="@(GitBin_x64)" DestinationFolder="$(OutDir)x64" SkipUnchangedFiles="true" />
+        <Copy Condition="'$(Platform)' == 'AnyCPU' and '@(GitBin_x86)' != ''" SourceFiles="@(GitBin_x86)" DestinationFolder="$(OutDir)x86" SkipUnchangedFiles="true" />
+        <Copy Condition="'$(Platform)' == 'x64' and '@(GitBin_x64)' != ''" SourceFiles="@(GitBin_x64)" DestinationFolder="$(OutDir)" SkipUnchangedFiles="true" />
+        <Copy Condition="'$(Platform)' == 'x86' and '@(GitBin_x86)' != ''" SourceFiles="@(GitBin_x86)" DestinationFolder="$(OutDir)" SkipUnchangedFiles="true" />
     </Target>
 </Project>

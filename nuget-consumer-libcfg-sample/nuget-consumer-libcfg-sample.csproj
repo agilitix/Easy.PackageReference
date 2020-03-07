@@ -1,17 +1,20 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(UserProfile)\.nuget\packages\LibGit2Sharp.NativeBinaries.2.0.263\build\LibGit2Sharp.NativeBinaries.props" Condition="Exists('$(UserProfile)\.nuget\packages\LibGit2Sharp.NativeBinaries.2.0.263\build\LibGit2Sharp.NativeBinaries.props')" />
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{466FBDFB-4189-4F98-B807-0CF4992BA60D}</ProjectGuid>
+    <ProjectGuid>{66D979DF-2CD7-429D-AEDD-CFF2B410FBA0}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>nuget_consumer_lib_sample</RootNamespace>
-    <AssemblyName>nuget-consumer-lib-sample</AssemblyName>
+    <RootNamespace>nuget_consumer_libcfg_sample</RootNamespace>
+    <AssemblyName>nuget-consumer-libcfg-sample</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -41,13 +44,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Class10.cs" />
+    <Compile Include="Class30.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="LibGit2Sharp.NativeBinaries">
-      <Version>2.0.306</Version>
-    </PackageReference>
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('$(UserProfile)\.nuget\packages\LibGit2Sharp.NativeBinaries.2.0.263\build\LibGit2Sharp.NativeBinaries.props')" Text="$([System.String]::Format('$(ErrorText)', '$(UserProfile)\.nuget\packages\LibGit2Sharp.NativeBinaries.2.0.263\build\LibGit2Sharp.NativeBinaries.props'))" />
+  </Target>
 </Project>
